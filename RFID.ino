@@ -31,13 +31,17 @@ bool ParseWiegand26(uint32_t& facility, uint32_t& card, const uint64_t data)
 	uint64_t bitHolder = data;
 	uint64_t bitHolderParity = data;
 	uint64_t one = 1;
+#ifdef _DEBUG
 	unsigned int oddParity = bitHolder & 0x1UL;
+#endif
 	bitHolder >>= 1; // Skip the parity
 	card = bitHolder & 0xFFFFUL;
 	bitHolder >>= 16; // Skip the card code
 	facility = bitHolder & 0xFFUL;
 	bitHolder >>= 8; // Skip the facility code
+#ifdef _DEBUG
 	unsigned int evenParity = bitHolder & 0x1UL;
+#endif
 
 #ifdef _DEBUG
 	Serial.print("Even Parity: ");
